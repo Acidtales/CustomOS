@@ -103,6 +103,25 @@ sudo apt update
 echo "Clonando Picom en $downloads_dir..."
 sudo -u $username git clone https://github.com/yshui/picom.git "$downloads_dir/picom"
 
+# Instalar libconfig-1.7.3 desde la carpeta de trabajo actual
+echo "Instalando libconfig-1.7.3 desde el directorio actual..."
+
+# Navegar al directorio libconfig-1.7.3 (suponiendo que ya está en el directorio actual)
+cd libconfig-1.7.3
+
+# Compilar e instalar libconfig-1.7.3
+make
+if [ $? -ne 0 ]; entonces
+    echo "Error al ejecutar make en libconfig-1.7.3"
+    exit 1
+fi
+sudo make install
+if [ $? -ne 0 ]; entonces
+    echo "Error al ejecutar make install en libconfig-1.7.3"
+    exit 1
+fi
+sudo ldconfig
+
 # Navegar al directorio picom
 cd "$downloads_dir/picom"
 
@@ -114,5 +133,3 @@ if [ $? -ne 0 ]; entonces
 fi
 
 echo "Meson setup completado correctamente en picom."
-
-sleep 3
