@@ -41,8 +41,8 @@ echo "Clonar i compilar bspwm i sxhkd al home del usuari..."
 sleep 3
 
 # Clonar los repositorios
-sudo -u $username git clone https://github.com/baskerville/bspwm.git "$downloads_dir/Descargas/bspwm"
-sudo -u $username git clone https://github.com/baskerville/sxhkd.git "$downloads_dir/Descargas/sxhkd"
+sudo -u $username git clone https://github.com/baskerville/bspwm.git "$downloads_dir/bspwm"
+sudo -u $username git clone https://github.com/baskerville/sxhkd.git "$downloads_dir/sxhkd"
 
 # Compilar e instal·lar bspwm
 echo "Compilando e instalando bspwm..."
@@ -71,13 +71,13 @@ if [ $? -ne 0 ]; then
 fi
 
 sudo apt install bspwm -y
-
+mkdir "$user_home/.config/{bspwm,sxhkd}"
+mkdir "$user_home/.config/bspwm/scripts"
 echo "Instalación de bspwm y sxhkd completada correctamente."
 
 sleep 2
 
 # Script bspwm_resize <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< REPASSAR
-mkdir "$user_home/.config/bspwm/scripts"
 echo "Moviendo script bspwm_resize y el resto de configuración..."
 cp bspwm_resize "$user_home/.config/bspwm/scripts"
 cp bspwmrc "$user_home/.config/bspwm/"
