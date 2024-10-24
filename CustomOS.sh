@@ -176,5 +176,116 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Instalación de Picom completada correctamente."
-
 sleep 3
+
+echo "Instalando Rofi.."
+sudo apt install rofi -y
+echo "Rofi instalado"
+sleep 3
+
+# Definir la URL de la fuente y el directorio de instalación
+FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/Hack.zip"
+FONT_DIR="/usr/local/share/fonts"
+ZIP_FILE="Hack.zip"
+
+# Descargar la fuente
+echo "Descargando la fuente Hack desde Nerd Fonts..."
+wget -O "$FONT_DIR/$ZIP_FILE" "$FONT_URL"
+if [ $? -ne 0 ]; then
+    echo "Error al descargar la fuente Hack."
+    exit 1
+fi
+
+# Navegar al directorio de instalación
+cd "$FONT_DIR" || { echo "Error: No se pudo acceder a $FONT_DIR"; exit 1; }
+
+# Descomprimir la fuente
+echo "Descomprimiendo Hack.zip..."
+sudo unzip -o "$ZIP_FILE"
+if [ $? -ne 0 ]; then
+    echo "Error al descomprimir Hack.zip."
+    exit 1
+fi
+
+# Eliminar el archivo .zip
+echo "Eliminando Hack.zip..."
+sudo rm "$ZIP_FILE"
+if [ $? -ne 0 ]; then
+    echo "Error al eliminar Hack.zip."
+    exit 1
+fi
+
+# Actualizar la caché de fuentes
+echo "Actualizando la caché de fuentes..."
+sudo fc-cache -fv
+
+echo "Fuente Hack instalada correctamente."
+sleep 5
+
+# Instalar zsh
+echo "Instalando zsh..."
+apt update && apt install -y zsh
+if [ $? -ne 0 ]; then
+    echo "Error al instalar zsh."
+    exit 1
+fi
+
+# Definir la URL de descarga de kitty y las rutas
+KITTY_URL="https://github.com/kovidgoyal/kitty/releases/download/v0.36.4/kitty-0.36.4-x86_64.txz"
+KITTY_DIR="/opt/kitty"
+TXZ_FILE="/tmp/kitty-0.36.4-x86_64.txz"
+
+# Descargar kitty
+echo "Descargando kitty desde GitHub..."
+wget -O "$TXZ_FILE" "$KITTY_URL"
+if [ $? -ne 0 ]; then
+    echo "Error al descargar kitty."
+    exit 1
+fi
+
+# Crear la carpeta /opt/kitty
+echo "Creando el directorio /opt/kitty..."
+mkdir -p "$KITTY_DIR"
+if [ $? -ne 0 ]; then
+    echo "Error al crear el directorio /opt/kitty."
+    exit 1
+fi
+
+# Descomprimir el archivo .txz
+echo "Descomprimiendo el archivo kitty-0.36.4-x86_64.txz..."
+tar -xvf "$TXZ_FILE" -C /tmp
+if [ $? -ne 0 ]; then
+    echo "Error al descomprimir kitty-0.36.4-x86_64.txz."
+    exit 1
+fi
+
+# Buscar y descomprimir el archivo .tar dentro del .txz (si lo hay)
+TAR_FILE=$(find /tmp -name "*.tar")
+if [ -n "$TAR_FILE" ]; then
+    echo "Descomprimiendo el archivo $TAR_FILE..."
+    tar -xvf "$TAR_FILE" -C /tmp
+    if [ $? -ne 0 ]; then
+        echo "Error al descomprimir el archivo $TAR_FILE."
+        exit 1
+    fi
+else
+    echo "No se encontró un archivo .tar dentro del .txz."
+    exit 1
+fi
+
+# Mover los archivos descomprimidos a /opt/kitty
+echo "Moviendo los archivos descomprimidos a /opt/kitty..."
+mv /tmp/kitty*/* "$KITTY_DIR"
+if [ $? -ne 0 ]; then
+    echo "Error al mover los archivos a /opt/kitty."
+    exit 1
+fi
+
+# Limpieza de archivos temporales
+echo "Limpiando archivos temporales..."
+rm -rf /tmp/kitty*
+
+echo "Instalación de zsh y kitty completada correctamente."
+sleep 5
+
+
