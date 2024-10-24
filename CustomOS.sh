@@ -21,7 +21,8 @@ fi
 
 # Actualizar el sistema (Adaptat per a ParrotOS)
 echo "Actualizant el sistema ParrotOS..."
-sudo apt update && parrot-upgrade -y
+sudo apt update 
+#&& parrot-upgrade -y
 if [ $? -ne 0 ]; then
     echo "Error durant l'actualizació del sistema. Cancel·lant."
     exit 1
@@ -100,33 +101,51 @@ sudo apt install libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libe
 sudo apt update
 
 # Instalar libconfig-1.7.3 desde la carpeta de trabajo actual
-echo "Instalando libconfig-1.7.3 desde github"
+echo "Instalando libconfig-1.7.3 des de GitHub"
 sleep 4
 
-cd "downloads_dir"
-wget "$downloads_dir https://github.com/hyperrealm/libconfig/releases/download/v1.7.3/libconfig-1.7.3.tar.gz"
-cd "$downloads_dir/libconfig-1.7.3"
+# Moverse a la carpeta de descargas
+cd "$downloads_dir" || { echo "Error: No se pudo acceder a $downloads_dir"; exit 1; }
+
+# Descargar libconfig-1.7.3
+wget "https://github.com/hyperrealm/libconfig/releases/download/v1.7.3/libconfig-1.7.3.tar.gz"
+if [ $? -ne 0 ]; then
+    echo "Error al descargar libconfig-1.7.3"
+    exit 1
+fi
+
+# Descomprimir el archivo descargado
 tar -xvzf libconfig-1.7.3.tar.gz
+if [ $? -ne 0 ]; then
+    echo "Error al descomprimir libconfig-1.7.3.tar.gz"
+    exit 1
+fi
 
-# Navegar al directorio libconfig-1.7.3 (suponiendo que ya está en el directorio actual)
-cd libconfig-1.7.3
+# Navegar al directorio descomprimido
+cd "$downloads_dir/libconfig-1.7.3" || { echo "Error: No se pudo acceder al directorio libconfig-1.7.3"; exit 1; }
 
-# Configurar, compilar e instalar libconfig-1.7.3
+# Configurar libconfig-1.7.3
 ./configure
 if [ $? -ne 0 ]; then
     echo "Error al ejecutar ./configure en libconfig-1.7.3"
     exit 1
 fi
+
+# Compilar libconfig-1.7.3
 make
 if [ $? -ne 0 ]; then
     echo "Error al ejecutar make en libconfig-1.7.3"
     exit 1
 fi
+
+# Instalar libconfig-1.7.3
 sudo make install
 if [ $? -ne 0 ]; then
     echo "Error al ejecutar make install en libconfig-1.7.3"
     exit 1
 fi
+
+echo "libconfig-1.7.3 instalado correctamente."
 
 # Clonar el repositorio de picom en /home/ggomez/Descargas
 echo "Clonando Picom en $downloads_dir..."
