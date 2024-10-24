@@ -8,7 +8,7 @@ fi
 
 # Actualizar el sistema (Adaptat per a ParrotOS)
 echo "Actualizant el sistema ParrotOS..."
-sudo apt update && apt parrot-upgrade -y
+sudo apt update && parrot-upgrade -y
 if [ $? -ne 0 ]; then
     echo "Error durant l'actualizació del sistema. Cancel·lant."
     exit 1
