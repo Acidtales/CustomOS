@@ -6,6 +6,19 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
+# Demanar el nom del usuari
+echo -n "Introduir el nom d'usuari:"
+read username
+
+# Definir el directori home del usuari
+user_home="/home/$username"
+
+# Verificar si el directori d'inici del usuario existeix
+if [ ! -d "$user_home" ]; then
+    echo "El directori d'inici de l'usuari $username no existeix."
+    exit 1
+fi
+
 # Actualizar el sistema (Adaptat per a ParrotOS)
 echo "Actualizant el sistema ParrotOS..."
 sudo apt update && parrot-upgrade -y
@@ -22,32 +35,23 @@ echo "Instal·lant dependencies..."
 apt install build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev libxcb-xinerama0-dev libasound2-dev libxcb-xtest0-dev libxcb-shape0-dev -y
 
 sleep 3
-
-# Definir el directori home del usuari
-if [ -z "$SUDO_USER" ]; then
-    user_home=$HOME
-else
-    user_home=$(eval echo ~$SUDO_USER)
-fi
-# Crear el directori Descargas si no existeix
-mkdir -p "$user_home/Descargas"
-
+downloads_dir="$user_home/Descargas"
 # Clonar, compilar e instalar bspwm i sxhkd al directori home del usuari
 echo "Clonar i compilar bspwm i sxhkd al home del usuari..."
 sleep 3
 
 # Clonar los repositorios
-sudo -u $SUDO_USER git clone https://github.com/baskerville/bspwm.git "$user_home/Descargas/"
-sudo -u $SUDO_USER git clone https://github.com/baskerville/sxhkd.git "$user_home/Descargas/"
+sudo -u $username git clone https://github.com/baskerville/bspwm.git "$downloads_dir/Descargas/bspwm"
+sudo -u $username git clone https://github.com/baskerville/sxhkd.git "$downloads_dir/Descargas/sxhkd"
 
 # Compilar e instal·lar bspwm
 echo "Compilando e instalando bspwm..."
-make -C "$user_home/Descargas/bspwm"
+make -C "$downloads_dir/bspwm"
 if [ $? -ne 0 ]; then
     echo "Error al ejecutar make en bspwm"
     exit 1
 fi
-sudo make -C "$user_home/Descargas/bspwm" install
+sudo make -C "$downloads_dir/bspwm" install
 if [ $? -ne 0 ]; then
     echo "Error al ejecutar make install en bspwm"
     exit 1
@@ -55,12 +59,12 @@ fi
 
 # Compilar e instal·lar sxhkd
 echo "Compilando e instalando sxhkd..."
-make -C "$user_home/Descargas/sxhkd"
+make -C "$downloads_dir/sxhkd"
 if [ $? -ne 0 ]; then
     echo "Error al ejecutar make en sxhkd"
     exit 1
 fi
-sudo make -C "$user_home/Descargas/sxhkd" install
+sudo make -C "$downloads_dir/sxhkd" install
 if [ $? -ne 0 ]; then
     echo "Error al ejecutar make install en sxhkd"
     exit 1
@@ -74,6 +78,7 @@ sleep 2
 
 # Script bspwm_resize <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< REPASSAR
 mkdir "$user_home/.config/bspwm/scripts"
+echo "Moviendo script bspwm_resize y el resto de configuración..."
 cp bspwm_resize "$user_home/.config/bspwm/scripts"
 cp bspwmrc "$user_home/.config/bspwm/"
 cp sxhkdrc "$user_home/.config/sxhkd/"
@@ -95,14 +100,15 @@ sudo apt install libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libe
 sudo apt update
 
 # Clonar el repositorio de picom en /home/ggomez/Descargas
-sudo -u $SUDO_USER git clone https://github.com/yshui/picom.git "$user_home/Descargas"/
+echo "Clonando Picom en $downloads_dir..."
+sudo -u $username git clone https://github.com/yshui/picom.git "$downloads_dir/picom"
 
 # Navegar al directorio picom
-cd "$user_home/Descargas/picom"
+cd "$downloads_dir/picom"
 
 # Ejecutar meson setup
 meson setup --buildtype=release build
-if [ $? -ne 0 ]; then
+if [ $? -ne 0 ]; entonces
     echo "Error al ejecutar meson setup en picom"
     exit 1
 fi
