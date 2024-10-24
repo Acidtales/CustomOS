@@ -288,4 +288,7 @@ rm -rf /tmp/kitty*
 echo "Instalación de zsh y kitty completada correctamente."
 sleep 5
 
+echo "Moviendo archivo .zshrc a su directorio"
+mv .zshrc ~/
+
 
