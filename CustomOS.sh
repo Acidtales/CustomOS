@@ -94,7 +94,7 @@ sleep 2
 
 # Instalacion Picom
 
-echo "Instalando picom.."
+echo "Instalando dependencias picom.."
 
 sudo apt install libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-glx0-dev libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev libxcb-xfixes0-dev meson ninja-build uthash-dev -y
 sudo apt update
@@ -109,28 +109,47 @@ echo "Instalando libconfig-1.7.3 desde el directorio actual..."
 # Navegar al directorio libconfig-1.7.3 (suponiendo que ya está en el directorio actual)
 cd libconfig-1.7.3
 
-# Compilar e instalar libconfig-1.7.3
+# Configurar, compilar e instalar libconfig-1.7.3
+./configure
+if [ $? -ne 0 ]; then
+    echo "Error al ejecutar ./configure en libconfig-1.7.3"
+    exit 1
+fi
 make
 if [ $? -ne 0 ]; then
     echo "Error al ejecutar make en libconfig-1.7.3"
     exit 1
 fi
-
 sudo make install
 if [ $? -ne 0 ]; then
     echo "Error al ejecutar make install en libconfig-1.7.3"
     exit 1
 fi
-sudo ldconfig
 
 # Navegar al directorio picom
 cd "$downloads_dir/picom"
 
 # Ejecutar meson setup
 meson setup --buildtype=release build
-if [ $? -ne 0 ]; entonces
+if [ $? -ne 0 ]; then
     echo "Error al ejecutar meson setup en picom"
     exit 1
 fi
 
-echo "Meson setup completado correctamente en picom."
+# Ejecutar ninja build
+ninja -C build
+if [ $? -ne 0 ]; then
+    echo "Error al ejecutar ninja en picom"
+    exit 1
+fi
+
+# Ejecutar ninja build install
+ninja -C build install
+if [ $? -ne 0 ]; then
+    echo "Error al ejecutar ninja install en picom"
+    exit 1
+fi
+
+echo "Instalación de Picom completada correctamente."
+
+sleep 3
