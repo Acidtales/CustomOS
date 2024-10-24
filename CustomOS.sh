@@ -99,12 +99,14 @@ echo "Instalando dependencias picom.."
 sudo apt install libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-glx0-dev libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev libxcb-xfixes0-dev meson ninja-build uthash-dev -y
 sudo apt update
 
-# Clonar el repositorio de picom en /home/ggomez/Descargas
-echo "Clonando Picom en $downloads_dir..."
-sudo -u $username git clone https://github.com/yshui/picom.git "$downloads_dir/picom"
-
 # Instalar libconfig-1.7.3 desde la carpeta de trabajo actual
-echo "Instalando libconfig-1.7.3 desde el directorio actual..."
+echo "Instalando libconfig-1.7.3 desde github"
+sleep 4
+
+cd "downloads_dir"
+wget "$downloads_dir https://github.com/hyperrealm/libconfig/releases/download/v1.7.3/libconfig-1.7.3.tar.gz"
+cd "$downloads_dir/libconfig-1.7.3"
+tar -xvzf libconfig-1.7.3.tar.gz
 
 # Navegar al directorio libconfig-1.7.3 (suponiendo que ya está en el directorio actual)
 cd libconfig-1.7.3
@@ -125,6 +127,10 @@ if [ $? -ne 0 ]; then
     echo "Error al ejecutar make install en libconfig-1.7.3"
     exit 1
 fi
+
+# Clonar el repositorio de picom en /home/ggomez/Descargas
+echo "Clonando Picom en $downloads_dir..."
+sudo -u $username git clone https://github.com/yshui/picom.git "$downloads_dir/picom"
 
 # Navegar al directorio picom
 cd "$downloads_dir/picom"
