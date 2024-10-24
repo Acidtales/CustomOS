@@ -71,7 +71,7 @@ if [ $? -ne 0 ]; then
 fi
 
 sudo apt install bspwm -y
-mkdir "$user_home/.config/{bspwm,sxhkd}"
+mkdir "$user_home/.config/"{bspwm,sxhkd}
 mkdir "$user_home/.config/bspwm/scripts"
 echo "Instalación de bspwm y sxhkd completada correctamente."
 
@@ -111,12 +111,13 @@ cd libconfig-1.7.3
 
 # Compilar e instalar libconfig-1.7.3
 make
-if [ $? -ne 0 ]; entonces
+if [ $? -ne 0 ]; then
     echo "Error al ejecutar make en libconfig-1.7.3"
     exit 1
 fi
+
 sudo make install
-if [ $? -ne 0 ]; entonces
+if [ $? -ne 0 ]; then
     echo "Error al ejecutar make install en libconfig-1.7.3"
     exit 1
 fi
