@@ -397,9 +397,14 @@ usermod --shell /usr/bin/zsh admin
 # link sombòlic a la configuració .zshrc
 ln -s -f /home/admin/.zshrc /root/.zshrc
 
+# canviant els persmisos a _bspc
+chown root:root /usr/local/share/zsh/site-functions/_bspc
+
 # Instal·lar plugins zsh
 echo "Instal·lació plugins ZSH..."
 sudo apt install zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting -y
+mkdir /usr/share/zsh-sudo
+wget https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo/sudo.plugin.zsh /usr/share/zsh-sudo
 sleep 2
 
 # Instal·lació powerlevel10k
