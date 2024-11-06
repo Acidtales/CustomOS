@@ -289,4 +289,4 @@ echo "Configuración de kitty completada correctamente."
 
 # Mover archivo .zshrc
 echo "Moviendo archivo .zshrc a su directorio"
-mv .zshrc ~/
+mv "$REPO_ROOT/.zshrc" ~/
