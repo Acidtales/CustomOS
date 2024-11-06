@@ -378,7 +378,7 @@ sleep 2
 echo "Copiant la configuració de la Polybar..."
 
 REPO_POLYBAR_DIR="$downloads_dir/CustomOS/polybar"
-POLYBAR_CONFIG_DIR="$user_home/.config/polybar"
+POLYBAR_CONFIG_DIR="$user_home/.config/polybar/polybar"
 
 # Mover y reemplazar archivos en el directorio de configuración de Polybar
 echo "Moviendo archivos de $REPO_POLYBAR_DIR a $POLYBAR_CONFIG_DIR y reemplazando los existentes..."
@@ -387,8 +387,19 @@ if [ $? -ne 0 ]; then
     echo "Error al mover y reemplazar archivos en $POLYBAR_CONFIG_DIR."
     exit 1
 fi
-echo "Archivos movidos y reemplazados correctamente en ~/.config/polybar."
+echo "Arxius moguts correctament a ~/.config/polybar/polybar"
+sleep 3
 
+# Instal·lar plugins zsh
+echo "Instal·lació plugins ZSH..."
+sudo apt install zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting -y
+sleep 2
 
+# Instal·lació powerlevel10k
+echo "Instal·lant la powerlevel10k a usuari i root..."
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$user_home/powerlevel10k"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "/root/powerlevel10k"
 
+cp "$download_dir/CustomOS/.p10k.zsh" "$user_home"
+cp "$download_dir/CustomOS/.p10k.zsh" /root
 
