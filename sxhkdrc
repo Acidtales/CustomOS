@@ -118,4 +118,4 @@ super + shift + {Left,Down,Up,Right}
 
 # Custom Resize
 super + alt + {Left,Down,Up,Right}
-	/home/ggomez/.config/scripts/bspwm_resize {west,south,north,east}
+	/home/admin/.config/scripts/bspwm_resize {west,south,north,east}
