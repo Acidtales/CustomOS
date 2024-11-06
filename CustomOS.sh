@@ -390,6 +390,10 @@ fi
 echo "Arxius moguts correctament a ~/.config/polybar"
 sleep 3
 
+# Configurant la shell a l'usuari i root
+usermod --shell /usr/bin/zsh root
+usermod --shell /usr/bin/zsh admin
+
 # Instal·lar plugins zsh
 echo "Instal·lació plugins ZSH..."
 sudo apt install zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting -y
