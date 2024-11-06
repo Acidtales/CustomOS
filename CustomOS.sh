@@ -10,11 +10,11 @@ fi
 echo -n "Introduir el nom d'usuari:"
 read username
 
-# Definir el directori de descargas
-downloads_dir="$user_home/Descargas"
-
 # Definir el directori home del usuari
 user_home="/home/$username"
+
+# Definir el directori de descargas
+downloads_dir="$user_home/Descargas"
 
 # Definir el directori del repositori
 REPO_ROOT="$downloads_dir/CustomOS"
