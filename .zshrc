@@ -49,13 +49,13 @@ alias ls='lsd --group-dirs=first'
 function settarget(){
     ip_address=$1
     machine_name=$2
-    echo "$ip_address $machine_name" > /home/acid/.config/bin/target
+    echo "$ip_address $machine_name" > /home/admin/.config/bin/target
 }
 
 # Clear Victim Target
 
 function cleartarget(){
-	echo '' > /home/acid/.config/bin/target
+	echo '' > /home/admin/.config/bin/target
 }
 
 function mkt(){
