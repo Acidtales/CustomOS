@@ -290,4 +290,68 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Crear el directorio de configuración de kitty al directorio de root si no existe
+KITTY_ROOT_CONFIG_DIR="/root/.config/kitty"
+echo "Creando el directorio de configuración de kitty para ROOT en $KITTY_ROOT_CONFIG_DIR..."
+mkdir -p "$KITTY_ROOT_CONFIG_DIR"
+
+# Mover el archivo kitty.conf al directorio del usuario root de configuración
+echo "Moviendo el archivo kitty.conf al directorio de configuración de ROOT..."
+cp "$REPO_ROOT/kitty.conf" "$KITTY_ROOT_CONFIG_DIR/"
+cp "$REPO_ROOT/color.ini" "$KITTY_ROOT_CONFIG_DIR/"
+if [ $? -ne 0 ]; then
+    echo "Error al mover kitty.conf a $KITTY_ROOT_CONFIG_DIR."
+    exit 1
+fi
 echo "Configuración de kitty completada correctamente."
+sleep 2
+
+# Instalación feh
+echo "Instal·lant feh.."
+apt install feh -y
+echo "Instal·lació de feh compeltada"
+sleep 2
+
+# Copiar archivos polybar y fuentes
+echo "Configuració polybar"
+
+# Definir el directorio de instalación y la URL de Polybar
+POLYBAR_REPO_URL="https://github.com/VaughnValle/blue-sky.git"
+POLYBAR_DIR="$downloads_dir/blue-sky"
+POLYBAR_CONFIG_DIR="$user_home/.config/polybar"
+FONT_DIR="/usr/share/fonts/truetype"
+
+# Clonar el repositorio de Polybar en la carpeta de Descargas
+echo "Clonando Polybar en $POLYBAR_DIR..."
+sudo -u "$username" git clone "$POLYBAR_REPO_URL" "$POLYBAR_DIR"
+if [ $? -ne 0 ]; then
+    echo "Error al clonar el repositorio de Polybar."
+    exit 1
+fi
+
+# Crear el directorio de configuración de Polybar si no existe
+#echo "Creando el directorio de configuración para Polybar en $POLYBAR_CONFIG_DIR..."
+#mkdir -p "$POLYBAR_CONFIG_DIR"
+
+# Copiar el contenido del repositorio clonado a ~/.config/polybar
+echo "Copiando archivos de configuración de Polybar a $POLYBAR_CONFIG_DIR..."
+cp -r "$POLYBAR_DIR"/* "$POLYBAR_CONFIG_DIR/"
+if [ $? -ne 0 ]; then
+    echo "Error al copiar archivos de Polybar a $POLYBAR_CONFIG_DIR."
+    exit 1
+fi
+
+# Copiar las fuentes a /usr/share/fonts/truetype
+echo "Copiando fuentes de Polybar a $FONT_DIR..."
+cp -r "$POLYBAR_DIR/fonts/"* "$FONT_DIR/"
+if [ $? -ne 0 ]; then
+    echo "Error al copiar las fuentes de Polybar a $FONT_DIR."
+    exit 1
+fi
+
+# Actualizar la caché de fuentes
+echo "Actualizando la caché de fuentes..."
+fc-cache -v
+
+echo "Instalació de Polybar completada correctament."
+
