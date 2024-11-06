@@ -352,6 +352,43 @@ fi
 # Actualizar la caché de fuentes
 echo "Actualizando la caché de fuentes..."
 fc-cache -v
-
 echo "Instalació de Polybar completada correctament."
+
+# Moure els scripts de la polybar a la carpeta de bspwm
+
+SCRIPTS_DIR="$downloads_dir/CustomOS/scripts"
+BSPWM_CONFIG_DIR="$user_home/.config/bspwm"
+
+# Verificar si la carpeta "scripts" existe en el repositorio
+if [ -d "$SCRIPTS_DIR" ]; then
+    echo "Copiando la carpeta scripts a $BSPWM_CONFIG_DIR..."
+    cp -r "$SCRIPTS_DIR" "$BSPWM_CONFIG_DIR/"
+    if [ $? -ne 0 ]; then
+        echo "Error al copiar la carpeta scripts a $BSPWM_CONFIG_DIR."
+        exit 1
+    fi
+else
+    echo "No se encontró la carpeta scripts en $SCRIPTS_DIR."
+    exit 1
+fi
+echo "Carpeta scripts copiada correctament a ~/.config/bspwm."
+sleep 2
+
+# Copiar configuración polybar
+echo "Copiant la configuració de la Polybar..."
+
+REPO_POLYBAR_DIR="$downloads_dir/CustomOS/polybar"
+POLYBAR_CONFIG_DIR="$user_home/.config/polybar"
+
+# Mover y reemplazar archivos en el directorio de configuración de Polybar
+echo "Moviendo archivos de $REPO_POLYBAR_DIR a $POLYBAR_CONFIG_DIR y reemplazando los existentes..."
+cp -rf "$REPO_POLYBAR_DIR/"* "$POLYBAR_CONFIG_DIR/"
+if [ $? -ne 0 ]; then
+    echo "Error al mover y reemplazar archivos en $POLYBAR_CONFIG_DIR."
+    exit 1
+fi
+echo "Archivos movidos y reemplazados correctamente en ~/.config/polybar."
+
+
+
 
