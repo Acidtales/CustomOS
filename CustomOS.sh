@@ -13,6 +13,10 @@ read username
 # Definir el directori home del usuari
 user_home="/home/$username"
 
+# Definir el directori del repositori
+
+REPO_ROOT="$downloads_dir/CustomOS"
+
 # Verificar si el directori d'inici del usuario existeix
 if [ ! -d "$user_home" ]; then
     echo "El directori d'inici de l'usuari $username no existeix."
@@ -273,7 +277,7 @@ mkdir -p "$KITTY_CONFIG_DIR"
 
 # Mover el archivo kitty.conf al directorio de configuración
 echo "Moviendo el archivo kitty.conf al directorio de configuración..."
-mv ./kitty.conf "$KITTY_CONFIG_DIR/"
+mv "$REPO_ROOT/kitty.conf" "$KITTY_CONFIG_DIR/"
 if [ $? -ne 0 ]; then
     echo "Error al mover kitty.conf a $KITTY_CONFIG_DIR."
     exit 1
