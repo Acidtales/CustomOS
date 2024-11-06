@@ -236,6 +236,10 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Mover archivo .zshrc
+echo "Moviendo archivo .zshrc a su directorio"
+cp "$REPO_ROOT/.zshrc" "$user_home/"
+
 # Definir la URL de descarga de kitty y las rutas
 KITTY_URL="https://github.com/kovidgoyal/kitty/releases/download/v0.36.4/kitty-0.36.4-x86_64.txz"
 KITTY_DIR="/opt/kitty"
@@ -286,7 +290,3 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Configuración de kitty completada correctamente."
-
-# Mover archivo .zshrc
-echo "Moviendo archivo .zshrc a su directorio"
-cp "$REPO_ROOT/.zshrc" ~/
