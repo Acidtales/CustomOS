@@ -279,7 +279,7 @@ mkdir -p "$KITTY_CONFIG_DIR"
 
 # Mover el archivo kitty.conf al directorio de configuración
 echo "Moviendo el archivo kitty.conf al directorio de configuración..."
-mv "$REPO_ROOT/kitty.conf" "$KITTY_CONFIG_DIR/"
+cp "$REPO_ROOT/kitty.conf" "$KITTY_CONFIG_DIR/"
 if [ $? -ne 0 ]; then
     echo "Error al mover kitty.conf a $KITTY_CONFIG_DIR."
     exit 1
@@ -289,4 +289,4 @@ echo "Configuración de kitty completada correctamente."
 
 # Mover archivo .zshrc
 echo "Moviendo archivo .zshrc a su directorio"
-mv "$REPO_ROOT/.zshrc" ~/
+cp "$REPO_ROOT/.zshrc" ~/
