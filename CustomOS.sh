@@ -273,7 +273,7 @@ mkdir -p "$KITTY_CONFIG_DIR"
 
 # Mover el archivo kitty.conf al directorio de configuración
 echo "Moviendo el archivo kitty.conf al directorio de configuración..."
-mv kitty.conf "$KITTY_CONFIG_DIR/"
+mv ./kitty.conf "$KITTY_CONFIG_DIR/"
 if [ $? -ne 0 ]; then
     echo "Error al mover kitty.conf a $KITTY_CONFIG_DIR."
     exit 1
