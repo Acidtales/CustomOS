@@ -267,7 +267,7 @@ echo "Instalación de kitty completada correctamente."
 sleep 5
 
 # Crear el directorio de configuración de kitty si no existe
-KITTY_CONFIG_DIR="$HOME/.config/kitty"
+KITTY_CONFIG_DIR="$user_home/.config/kitty"
 echo "Creando el directorio de configuración para kitty en $KITTY_CONFIG_DIR..."
 mkdir -p "$KITTY_CONFIG_DIR"
 
