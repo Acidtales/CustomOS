@@ -318,7 +318,7 @@ echo "Configuració polybar"
 # Definir el directorio de instalación y la URL de Polybar
 POLYBAR_REPO_URL="https://github.com/VaughnValle/blue-sky.git"
 POLYBAR_DIR="$downloads_dir/blue-sky"
-POLYBAR_CONFIG_DIR="$user_home/.config/polybar"
+POLYBAR_CONFIG_DIR="$user_home/.config/"
 FONT_DIR="/usr/share/fonts/truetype"
 
 # Clonar el repositorio de Polybar en la carpeta de Descargas
