@@ -400,6 +400,6 @@ echo "Instal·lant la powerlevel10k a usuari i root..."
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$user_home/powerlevel10k"
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "/root/powerlevel10k"
 
-cp "$download_dir/CustomOS/.p10k.zsh" "$user_home"
-cp "$download_dir/CustomOS/.p10k.zsh" /root
+cp "$downloads_dir/CustomOS/.p10k.zsh" "$user_home"
+cp "$downloads_dir/CustomOS/.p10k.zsh" /root
 
