@@ -253,42 +253,34 @@ fi
 
 # Descomprimir el archivo .txz
 echo "Descomprimiendo el archivo kitty-0.36.4-x86_64.txz..."
-tar -xvf "$TXZ_FILE" -C /tmp
+tar -xvf "$TXZ_FILE" -C "$KITTY_DIR"
 if [ $? -ne 0 ]; then
     echo "Error al descomprimir kitty-0.36.4-x86_64.txz."
     exit 1
 fi
 
-# Buscar y descomprimir el archivo .tar dentro del .txz (si lo hay)
-TAR_FILE=$(find /tmp -name "*.tar")
-if [ -n "$TAR_FILE" ]; then
-    echo "Descomprimiendo el archivo $TAR_FILE..."
-    tar -xvf "$TAR_FILE" -C /tmp
-    if [ $? -ne 0 ]; then
-        echo "Error al descomprimir el archivo $TAR_FILE."
-        exit 1
-    fi
-else
-    echo "No se encontró un archivo .tar dentro del .txz."
-    exit 1
-fi
-
-# Mover los archivos descomprimidos a /opt/kitty
-echo "Moviendo los archivos descomprimidos a /opt/kitty..."
-mv /tmp/kitty*/* "$KITTY_DIR"
-if [ $? -ne 0 ]; then
-    echo "Error al mover los archivos a /opt/kitty."
-    exit 1
-fi
-
 # Limpieza de archivos temporales
 echo "Limpiando archivos temporales..."
-rm -rf /tmp/kitty*
+rm -f "$TXZ_FILE"
 
-echo "Instalación de zsh y kitty completada correctamente."
+echo "Instalación de kitty completada correctamente."
 sleep 5
 
+# Crear el directorio de configuración de kitty si no existe
+KITTY_CONFIG_DIR="$HOME/.config/kitty"
+echo "Creando el directorio de configuración para kitty en $KITTY_CONFIG_DIR..."
+mkdir -p "$KITTY_CONFIG_DIR"
+
+# Mover el archivo kitty.conf al directorio de configuración
+echo "Moviendo el archivo kitty.conf al directorio de configuración..."
+mv kitty.conf "$KITTY_CONFIG_DIR/"
+if [ $? -ne 0 ]; then
+    echo "Error al mover kitty.conf a $KITTY_CONFIG_DIR."
+    exit 1
+fi
+
+echo "Configuración de kitty completada correctamente."
+
+# Mover archivo .zshrc
 echo "Moviendo archivo .zshrc a su directorio"
 mv .zshrc ~/
-
-
