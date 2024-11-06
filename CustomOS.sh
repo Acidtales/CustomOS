@@ -378,7 +378,7 @@ sleep 2
 echo "Copiant la configuració de la Polybar..."
 
 REPO_POLYBAR_DIR="$downloads_dir/CustomOS/polybar"
-POLYBAR_CONFIG_DIR="$user_home/.config/polybar/polybar"
+POLYBAR_CONFIG_DIR="$user_home/.config/polybar"
 
 # Mover y reemplazar archivos en el directorio de configuración de Polybar
 echo "Moviendo archivos de $REPO_POLYBAR_DIR a $POLYBAR_CONFIG_DIR y reemplazando los existentes..."
@@ -387,7 +387,7 @@ if [ $? -ne 0 ]; then
     echo "Error al mover y reemplazar archivos en $POLYBAR_CONFIG_DIR."
     exit 1
 fi
-echo "Arxius moguts correctament a ~/.config/polybar/polybar"
+echo "Arxius moguts correctament a ~/.config/polybar"
 sleep 3
 
 # Instal·lar plugins zsh
