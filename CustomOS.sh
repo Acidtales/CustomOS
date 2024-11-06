@@ -343,7 +343,7 @@ fi
 
 # Copiar las fuentes a /usr/share/fonts/truetype
 echo "Copiando fuentes de Polybar a $FONT_DIR..."
-cp -r "$POLYBAR_DIR/fonts/"* "$FONT_DIR/"
+cp -r "$POLYBAR_DIR/polybar/fonts/"* "$FONT_DIR/"
 if [ $? -ne 0 ]; then
     echo "Error al copiar las fuentes de Polybar a $FONT_DIR."
     exit 1
