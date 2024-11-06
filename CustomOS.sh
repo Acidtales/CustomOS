@@ -394,6 +394,9 @@ sleep 3
 usermod --shell /usr/bin/zsh root
 usermod --shell /usr/bin/zsh admin
 
+# link sombòlic a la configuració .zshrc
+ln -s -f /home/admin/.zshrc /root/.zshrc
+
 # Instal·lar plugins zsh
 echo "Instal·lació plugins ZSH..."
 sudo apt install zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting -y
