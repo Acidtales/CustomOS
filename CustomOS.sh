@@ -404,7 +404,7 @@ chown root:root /usr/local/share/zsh/site-functions/_bspc
 echo "Instal·lació plugins ZSH..."
 sudo apt install zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting -y
 mkdir /usr/share/zsh-sudo
-wget https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/sudo/sudo.plugin.zsh /usr/share/zsh-sudo
+wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/sudo/sudo.plugin.zsh -O /usr/share/zsh-sudo/sudo.plugin.zsh
 sleep 2
 
 # Instal·lació powerlevel10k
@@ -415,3 +415,11 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "/root/powerlev
 cp "$downloads_dir/CustomOS/.p10k.zsh" "$user_home"
 cp "$downloads_dir/CustomOS/.p10k.zsh" /root
 
+# Instal·lar batcat
+echo "Instal·lació de batcat i lsd..."
+sleep 2
+wget https://github.com/sharkdp/bat/releases/download/v0.24.0/bat_0.24.0_amd64.deb -O "$downloads_dir/batcat.deb"
+wget https://github.com/lsd-rs/lsd/releases/download/v1.1.5/lsd_1.1.5_amd64.deb -O "$downloads_dir/lsd.deb"
+dpkg -i "$downloads_dir/batcat.deb"
+sleep 1
+dpkg -i "$downloads_dir/lsd.deb"
