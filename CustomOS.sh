@@ -316,16 +316,16 @@ sleep 2
 echo "Configuració polybar"
 
 # Definir el directorio de instalación y la URL de Polybar
-POLYBAR_REPO_URL="https://github.com/VaughnValle/blue-sky.git"
-POLYBAR_DIR="$downloads_dir/blue-sky"
+BLUESKY_REPO_URL="https://github.com/VaughnValle/blue-sky.git"
+BLUESKY_DIR="$downloads_dir/blue-sky"
 POLYBAR_CONFIG_DIR="$user_home/.config/"
 FONT_DIR="/usr/share/fonts/truetype"
 
 # Clonar el repositorio de Polybar en la carpeta de Descargas
-echo "Clonando Polybar en $POLYBAR_DIR..."
-sudo -u "$username" git clone "$POLYBAR_REPO_URL" "$POLYBAR_DIR"
+echo "Clonando Blue-Sky en $BLUESKY_DIR..."
+sudo -u "$username" git clone "$BLUESKY_REPO_URL" "$BLUESKY_DIR"
 if [ $? -ne 0 ]; then
-    echo "Error al clonar el repositorio de Polybar."
+    echo "Error al clonar el repositorio de Blue-Sky."
     exit 1
 fi
 
@@ -335,7 +335,7 @@ fi
 
 # Copiar el contenido del repositorio clonado a ~/.config/polybar
 echo "Copiando archivos de configuración de Polybar a $POLYBAR_CONFIG_DIR..."
-cp -r "$POLYBAR_DIR"/* "$POLYBAR_CONFIG_DIR/"
+cp -r "$BLUESKY_DIR"/polybar/* "$POLYBAR_CONFIG_DIR/polybar/"
 if [ $? -ne 0 ]; then
     echo "Error al copiar archivos de Polybar a $POLYBAR_CONFIG_DIR."
     exit 1
@@ -343,7 +343,7 @@ fi
 
 # Copiar las fuentes a /usr/share/fonts/truetype
 echo "Copiando fuentes de Polybar a $FONT_DIR..."
-cp -r "$POLYBAR_DIR/polybar/fonts/"* "$FONT_DIR/"
+cp -r "$BLUESKY_DIR/polybar/fonts/"* "$FONT_DIR/"
 if [ $? -ne 0 ]; then
     echo "Error al copiar las fuentes de Polybar a $FONT_DIR."
     exit 1
@@ -413,7 +413,7 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$user_home/pow
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "/root/powerlevel10k"
 
 cp "$downloads_dir/CustomOS/.p10k.zsh" "$user_home"
-cp "$downloads_dir/CustomOS/.p10k.zsh" /root
+cp "$downloads_dir/CustomOS/.p10kroot.zsh" /root/.p10k.zsh
 
 # Instal·lar batcat
 echo "Instal·lació de batcat i lsd..."
